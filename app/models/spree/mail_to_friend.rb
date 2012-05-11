@@ -34,6 +34,7 @@ class Spree::MailToFriend
 
     @hide_recipients = opts[:hide_recipients] || false
     @message = opts[:message]
+    strip_whitespace
   end
 
   def persisted?
@@ -42,5 +43,10 @@ class Spree::MailToFriend
 
   def is_multi
     (@recipients.size + @invalid_recipients.size) > 1
+  end
+
+  def strip_whitespace
+    self.sender_email = self.sender_email.strip
+    self.recipient_email = self.recipient_email.strip
   end
 end
